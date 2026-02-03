@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { WindowInstance, WindowStore } from '../types';
 
-// Split contexts
 export const WindowStateContext = createContext<WindowInstance[] | null>(null);
 type WindowDispatch = Omit<WindowStore, 'windows'>;
 export const WindowDispatchContext = createContext<WindowDispatch | null>(null);
@@ -22,6 +21,7 @@ export const WindowDispatchContext = createContext<WindowDispatch | null>(null);
  */
 export function WindowStoreProvider({ children }: { children: ReactNode }) {
   const [windows, setWindows] = useState<WindowInstance[]>([]);
+  const [snapPreview, setSnapPreview] = useState<{ side: 'left' | 'right' } | null>(null);
 
   const openWindow = useCallback((windowInstance: WindowInstance) => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
@@ -41,9 +41,6 @@ export function WindowStoreProvider({ children }: { children: ReactNode }) {
 
   const focusWindow = useCallback((id: string) => {
     setWindows((prev) => {
-      // If already top, don't update to avoid unnecessary state change
-      // (Optional optimization, but good for performance)
-      // For now, simpler logic to ensure consistency:
       const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
       return prev.map(w => w.id === id ? { ...w, zIndex: maxZ + 1, isMinimized: false } : w);
     });
@@ -53,13 +50,14 @@ export function WindowStoreProvider({ children }: { children: ReactNode }) {
     setWindows((prev) => prev.map(w => (w.id === id ? { ...w, ...data } : w)));
   }, []);
 
-  // Memoize dispatch value so it remains referentially stable
   const dispatchValue = useMemo(() => ({
+    snapPreview,
+    setSnapPreview,
     openWindow,
     closeWindow,
     focusWindow,
     updateWindow,
-  }), [openWindow, closeWindow, focusWindow, updateWindow]);
+  }), [snapPreview, openWindow, closeWindow, focusWindow, updateWindow]);
 
   return (
     <WindowDispatchContext.Provider value={dispatchValue}>

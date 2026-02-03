@@ -3,7 +3,7 @@
 import React from 'react'
 import { WindowContext } from './WindowContext'
 import { useWindowActions } from '../../store/WindowStore'
-import { useWindowStatus } from '../../hooks/useWindowStatus'
+import { useWindowStatus } from '../../hooks/useWindow/useWindowStatus'
 import WindowHeader from './WindowHeader'
 
 import styles from '../../styles/Window.module.css'
@@ -18,7 +18,7 @@ import { WindowProps, WindowContextState } from '../../types'
  * @returns {JSX.Element} The window component.
  */
 const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
-  const { closeWindow, focusWindow, updateWindow } = useWindowActions()
+  const { closeWindow, focusWindow, updateWindow, setSnapPreview } = useWindowActions()
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -33,10 +33,27 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
   };
 
   const handleMinimize = () => updateWindow(windowInstance.id, { isMinimized: true });
-  const handleMaximize = () => updateWindow(windowInstance.id, { isMaximized: true, isMinimized: false });
-  const handleRestore = () => updateWindow(windowInstance.id, { isMinimized: false, isMaximized: false });
+  const handleMaximize = () => updateWindow(windowInstance.id, { isMaximized: true, isMinimized: false, isSnapped: false });
+  const handleRestore = () => updateWindow(windowInstance.id, { isMinimized: false, isMaximized: false, isSnapped: false });
 
-  // Use physics engine hook directly
+  const handleSnap = React.useCallback((side: 'left' | 'right') => {
+    const width = window.innerWidth / 2;
+    const height = window.innerHeight;
+    const x = side === 'left' ? 0 : width;
+
+    updateWindow(windowInstance.id, {
+      isSnapped: true,
+      isMaximized: false,
+      isMinimized: false,
+      size: { width, height },
+      position: { x, y: 0 }
+    });
+  }, [updateWindow, windowInstance.id]);
+
+  const handleUnsnap = React.useCallback(() => {
+    updateWindow(windowInstance.id, { isSnapped: false });
+  }, [updateWindow, windowInstance.id]);
+
   const {
     size,
     position,
@@ -50,9 +67,12 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
     initialPosition: windowInstance.position,
     isMinimized: windowInstance.isMinimized || false,
     isMaximized: windowInstance.isMaximized || false,
+    isSnapped: windowInstance.isSnapped || false,
+    onSnap: handleSnap,
+    onUnsnap: handleUnsnap,
+    setSnapPreview
   })
 
-  // Construct context value
   const uiValue: WindowContextState = {
     size,
     position,
@@ -63,6 +83,7 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
     windowRef,
     isMinimized: windowInstance.isMinimized || false,
     isMaximized: windowInstance.isMaximized || false,
+    isSnapped: windowInstance.isSnapped || false,
     minimize: handleMinimize,
     maximize: handleMaximize,
     restore: handleRestore

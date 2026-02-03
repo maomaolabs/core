@@ -30,7 +30,7 @@ function ToolbarButton({ icon, onClick, label, isActive, onClose, component, win
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsHovered(false)
-    }, 100) // 100ms grace period
+    }, 100)
   }
 
   return (

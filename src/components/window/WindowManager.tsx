@@ -1,7 +1,8 @@
 'use client'
 
-import { useWindows } from '../../store/WindowStore'
+import { useWindows, useWindowActions } from '../../store/WindowStore'
 import Window from './Window'
+import SnapOverlay from './SnapOverlay'
 import styles from '../../styles/WindowManager.module.css'
 
 /**
@@ -12,9 +13,11 @@ import styles from '../../styles/WindowManager.module.css'
  */
 export default function WindowManager() {
   const windows = useWindows()
+  const { snapPreview } = useWindowActions()
 
   return (
     <div className={styles.manager}>
+      <SnapOverlay side={snapPreview ? snapPreview.side : null} />
       {windows.map((w) => (
         <Window key={w.id} window={w} />
       ))}
