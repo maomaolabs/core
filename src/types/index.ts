@@ -26,6 +26,7 @@ export type WindowInstance = {
   position?: { x: number; y: number };
   isMinimized?: boolean;
   isMaximized?: boolean;
+  isSnapped?: boolean;
   zIndex: number;
   component: React.ReactNode;
 }
@@ -36,6 +37,8 @@ export type WindowInstance = {
  */
 export type WindowStore = {
   windows: WindowInstance[];
+  snapPreview: { side: 'left' | 'right' } | null;
+  setSnapPreview: (preview: { side: 'left' | 'right' } | null) => void;
   openWindow: (window: WindowInstance) => void;
   closeWindow: (id: string) => void;
   focusWindow: (id: string) => void;
@@ -61,6 +64,7 @@ export type WindowContextState = {
   resize: (e: React.MouseEvent) => void
   isMinimized: boolean
   isMaximized: boolean
+  isSnapped: boolean
   minimize: () => void
   maximize: () => void
   restore: () => void

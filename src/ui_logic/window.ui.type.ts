@@ -1,4 +1,4 @@
-import { WindowStatusProps } from "../hooks/useWindowStatus";
+import { WindowStatusProps } from "../hooks/useWindow/useWindowStatus";
 
 export type WindowUIProviderProps = WindowStatusProps & {
   minimize: () => void;

@@ -21,7 +21,6 @@ const CAT_ICONS = {
   open: '/\\_/\\\n( ^.^ )\n> ^ <',
 };
 
-// Memoized wrapper to prevent re-renders due to inline functions
 const WindowButtonItem = memo(({ window, currentWindows, openWindow, closeWindow }: {
   window: WindowInstance,
   currentWindows: WindowInstance[],
@@ -51,7 +50,6 @@ const OptionButtonItem = memo(({ window, currentWindows, openWindow }: {
   openWindow: (w: WindowInstance) => void
 }) => {
   const isActive = currentWindows.some((ow) => ow.id === window.id);
-  // If active, it shouldn't be in this list (logic in default render), but if it were...
   const handleOpen = useCallback(() => openWindow({ ...window, zIndex: 0 } as WindowInstance), [openWindow, window]);
 
   return (
