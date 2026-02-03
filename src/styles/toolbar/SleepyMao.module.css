@@ -1,0 +1,57 @@
+.zzzContainer {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  pointer-events: none;
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+}
+
+.z {
+  position: absolute;
+  font-family: monospace;
+  font-weight: bold;
+  color: #1f2937;
+  opacity: 0;
+  line-height: 1;
+  animation: floatZ 4s infinite linear;
+}
+
+.z:nth-child(1) {
+  font-size: 0.6rem;
+  right: 32px;
+  top: 25px;
+  animation-delay: 0s;
+}
+
+.z:nth-child(2) {
+  font-size: 0.8rem;
+  right: 16px;
+  top: 12px;
+  animation-delay: 1.3s;
+}
+
+.z:nth-child(3) {
+  font-size: 1rem;
+  right: 0px;
+  top: 0px;
+  animation-delay: 2.6s;
+}
+
+@keyframes floatZ {
+  0% {
+    transform: translate(0, 0) rotate(-5deg);
+    opacity: 0;
+  }
+  25% { opacity: 0.8; }
+  75% { opacity: 0; }
+  100% {
+    transform: translate(15px, -25px) rotate(5deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .z { color: white; }
+}

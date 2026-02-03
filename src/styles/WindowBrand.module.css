@@ -1,0 +1,23 @@
+.title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.brandText {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.catIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}

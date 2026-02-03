@@ -1,0 +1,28 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  color: #71717a;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e4e4e7;
+}
+
+.close:hover {
+  background: #ef4444;
+  color: white;
+}

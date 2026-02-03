@@ -1,0 +1,163 @@
+.buttonWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.2s;
+  position: relative;
+  color: #1f2937;
+}
+
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.activeIndicator {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 2px;
+  background-color: #1f2937;
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.preview {
+  position: absolute;
+  bottom: -80%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 12px;
+  width: 160px;
+  background-color: rgba(229, 229, 229, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  animation: fadeIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  z-index: 110000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.previewTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1f2937;
+  margin-right: 0.5rem;
+}
+
+.previewClose {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.1rem;
+  border-radius: 0.25rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.previewClose:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+.previewBody {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.previewBody:hover { opacity: 0.9; }
+
+.previewContent {
+  width: 400%;
+  height: 400%;
+  transform: scale(0.25);
+  transform-origin: top left;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: white;
+  color: black;
+  text-align: left;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(-100% - 5px)) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(calc(-100% - 15px)) scale(1);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .button { color: white; }
+  .button:hover { background-color: rgba(255, 255, 255, 0.1); }
+  .activeIndicator { background-color: white; }
+  .preview {
+    background-color: rgba(30, 30, 30, 0.85);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .previewHeader {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+  .previewTitle { color: #e5e5e5; }
+  .previewClose { color: #9ca3af; }
+  .previewClose:hover {
+    background-color: rgba(220, 38, 38, 0.2);
+    color: #f87171;
+  }
+  .previewBody { background-color: rgba(255, 255, 255, 0.05); }
+  .previewBody:hover { background-color: rgba(255, 255, 255, 0.1); }
+  .previewContent {
+    background-color: #1a1a1a;
+    color: white;
+  }
+}

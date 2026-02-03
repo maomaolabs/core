@@ -1,0 +1,108 @@
+.dock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: rgba(212, 212, 212, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.dock:hover,
+.dock:focus-within { background-color: rgba(212, 212, 212, 0.3); }
+
+.launcher {
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(229, 229, 229, 0.5);
+  border: none;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.2s, width 0.2s ease;
+  flex-shrink: 0;
+  min-width: 48px;
+  width: auto;
+}
+
+.launcher:active { cursor: grabbing; }
+
+.launcher:hover,
+.launcher:focus-visible {
+  background-color: #e5e5e5;
+  outline: none;
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  gap: 0.5rem;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-10px);
+  margin-left: 0;
+  transition:
+    max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.2s ease-in-out,
+    transform 0.3s ease-out,
+    margin-left 0.3s ease;
+}
+
+.currentOpenedWindows {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  gap: 0.5rem;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(10px);
+  margin-right: 0;
+  transition:
+    max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.2s ease-in-out,
+    transform 0.3s ease-out,
+    margin-right 0.3s ease;
+}
+
+.currentOpenedWindowsVisible {
+  max-width: 1000px;
+  opacity: 1;
+  transform: translateX(0);
+  margin-right: 0.5rem;
+}
+
+.itemsVisible {
+  max-width: 1000px;
+  opacity: 1;
+  transform: translateX(0);
+  margin-left: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dock {
+    background-color: rgba(163, 163, 163, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .dock:hover,
+  .dock:focus-within {
+    background-color: rgba(163, 163, 163, 0.3);
+  }
+
+  .launcher {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .launcher:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
