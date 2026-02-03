@@ -73,58 +73,52 @@ export default function ToolbarDesktop({ openWindow, closeWindow, windowsOptions
   return (
     <div className={`${commonStyles.container} ${commonStyles.desktopOnly}`}>
       <div className={styles.dock}>
-        <div className={`${styles.currentOpenedWindows} ${currentWindows.length > 0 ? styles.currentOpenedWindowsVisible : ''}`}>
-          {currentWindows.map((w) => (
-            <WindowButtonItem
-              key={w.id}
-              window={w}
-              currentWindows={currentWindows}
-              openWindow={openWindow}
-              closeWindow={closeWindow}
-            />
-          ))}
-        </div>
+        <div className={styles.launcherWrapper}>
+          <div className={`${styles.items} ${styles.itemsLeft} ${currentWindows.length > 0 ? styles.itemsVisible : ''}`}>
+            {currentWindows.map((w) => (
+              <WindowButtonItem
+                key={w.id}
+                window={w}
+                currentWindows={currentWindows}
+                openWindow={openWindow}
+                closeWindow={closeWindow}
+              />
+            ))}
+          </div>
 
-        <div
-          style={{ display: 'flex', alignItems: 'center' }}
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => setIsOpen(false)}
-        >
-          <button
-            className={styles.launcher}
-            onClick={toggleOpen}
+          <div
+            className={styles.menuTriggerZone}
+            onMouseLeave={() => setIsOpen(false)}
           >
-            <SleepyMao show={!isOpen && currentWindows.length === 0} />
-
-            <span className={commonStyles.icon}
-              style={{
-                fontSize: '0.6rem',
-                whiteSpace: 'pre',
-                lineHeight: 1.1,
-                fontFamily: 'monospace',
-                textAlign: 'center'
-              }}
+            <button
+              className={styles.launcher}
+              onClick={toggleOpen}
+              onMouseEnter={() => setIsOpen(true)}
             >
-              {currentIcon}
-            </span>
-          </button>
+              <SleepyMao show={!isOpen && currentWindows.length === 0} />
 
-          <div className={`${styles.items} ${isOpen ? styles.itemsVisible : ''}`}>
-            {
-              windowsOptions.map((w) => {
-                if (!currentWindows.some((ow) => ow.id === w.id)) {
-                  return (
-                    <OptionButtonItem
-                      key={w.id}
-                      window={w}
-                      currentWindows={currentWindows}
-                      openWindow={openWindow}
-                    />
-                  )
-                }
-                return null;
-              })
-            }
+              <span className={`${commonStyles.icon} ${styles.catIcon}`}>
+                {currentIcon}
+              </span>
+            </button>
+
+            <div className={`${styles.items} ${styles.itemsRight} ${isOpen ? styles.itemsVisible : ''}`}>
+              {
+                windowsOptions.map((w) => {
+                  if (!currentWindows.some((ow) => ow.id === w.id)) {
+                    return (
+                      <OptionButtonItem
+                        key={w.id}
+                        window={w}
+                        currentWindows={currentWindows}
+                        openWindow={openWindow}
+                      />
+                    )
+                  }
+                  return null;
+                })
+              }
+            </div>
           </div>
         </div>
       </div>

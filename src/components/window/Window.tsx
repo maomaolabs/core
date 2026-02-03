@@ -129,10 +129,13 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
           {windowInstance.component}
         </div>
 
-        <div
-          className={`window-resize-handle ${styles.resizeHandle}`}
-          onMouseDown={resize}
-        />
+        {!isMaximized && (
+          <div
+            className={`window-resize-handle ${styles.resizeHandle}`}
+            onMouseDown={resize}
+          />
+        )}
+        
       </div>
     </WindowContext.Provider>
   )

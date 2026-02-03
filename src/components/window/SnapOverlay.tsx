@@ -6,6 +6,7 @@ interface SnapOverlayProps {
 }
 
 export default function SnapOverlay({ side }: SnapOverlayProps) {
+  if (!side) return null;
   return (
     <>
       <div

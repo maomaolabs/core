@@ -14,8 +14,29 @@
   cursor: pointer;
 }
 
+.launcherWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.menuTriggerZone {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.catIcon {
+  font-size: 0.7rem;
+  white-space: pre;
+  line-height: 1;
+  font-family: monospace;
+}
+
 .dock:hover,
-.dock:focus-within { background-color: rgba(212, 212, 212, 0.3); }
+.dock:focus-within {
+  background-color: rgba(212, 212, 212, 0.3);
+}
 
 .launcher {
   padding: 0.5rem;
@@ -29,11 +50,13 @@
   position: relative;
   transition: background-color 0.2s, width 0.2s ease;
   flex-shrink: 0;
-  min-width: 48px;
+  max-width: 50px;
   width: auto;
 }
 
-.launcher:active { cursor: grabbing; }
+.launcher:active {
+  cursor: grabbing;
+}
 
 .launcher:hover,
 .launcher:focus-visible {
@@ -44,47 +67,80 @@
 .items {
   display: flex;
   align-items: center;
-  overflow: hidden;
   gap: 0.5rem;
-  max-width: 0;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   opacity: 0;
-  transform: translateX(-10px);
-  margin-left: 0;
+  pointer-events: none;
+
+  /* Visual styles restored */
+  background-color: rgba(212, 212, 212, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+
+  padding: 0;
+  max-width: 0;
+  overflow: hidden;
+
   transition:
-    max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     opacity 0.2s ease-in-out,
     transform 0.3s ease-out,
-    margin-left 0.3s ease;
+    max-width 0.3s ease-out,
+    padding 0.3s ease;
 }
 
-.currentOpenedWindows {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  gap: 0.5rem;
-  max-width: 0;
-  opacity: 0;
-  transform: translateX(10px);
-  margin-right: 0;
-  transition:
-    max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    opacity 0.2s ease-in-out,
-    transform 0.3s ease-out,
-    margin-right 0.3s ease;
+.itemsRight {
+  left: 100%;
+  margin-left: 0.75rem;
+  transform: translateY(-50%) translateX(-10px);
 }
 
-.currentOpenedWindowsVisible {
-  max-width: 1000px;
+.itemsLeft {
+  right: 100%;
+  margin-right: 0.75rem;
+  transform: translateY(-50%) translateX(10px);
+}
+
+.launcher::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -0.8rem;
+  width: 0.8rem;
+  background: transparent;
+}
+
+.launcher::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -0.8rem;
+  width: 0.8rem;
+  background: transparent;
+}
+
+/* Animation States */
+.itemsRight.itemsVisible {
   opacity: 1;
-  transform: translateX(0);
-  margin-right: 0.5rem;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+  padding: 0.5rem;
+  max-width: 600px;
 }
 
-.itemsVisible {
-  max-width: 1000px;
+.itemsLeft.itemsVisible {
   opacity: 1;
-  transform: translateX(0);
-  margin-left: 0.5rem;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+  padding: 0.5rem;
+  max-width: 600px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -104,5 +160,10 @@
 
   .launcher:hover {
     background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .items {
+    background-color: rgba(163, 163, 163, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 }
