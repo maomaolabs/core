@@ -20,15 +20,6 @@ MaoMao Core is a headless-first, stylable window manager library that brings a D
 
 ---
 
-## 📦 Installation
-
-```bash
-npm install @maomaolabs/core
-# or
-yarn add @maomaolabs/core
-```
-
----
 
 ## 🚀 Quick Start
 
