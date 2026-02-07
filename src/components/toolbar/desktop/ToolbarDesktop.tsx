@@ -1,11 +1,11 @@
 import React from 'react'
-import commonStyles from '../../../styles/toolbar/Toolbar.module.css'
 import styles from '../../../styles/toolbar/ToolbarDesktop.module.css'
-import { WindowInstance, ToolbarItem, FolderDefinition } from "../../../types"
+import { WindowInstance, ToolbarItem } from "../../../types"
 import SleepyMao from '../common/SleepyMao'
 import { OptionButtonItem } from './OptionButtonItem'
 import { FolderItem } from './FolderItem'
 import { WindowButtonItem } from './WindowButtonItem'
+import { useToolbarItems } from '../../../hooks/useToolbarItems'
 
 type ToolbarDesktopProps = {
   openWindow: (window: WindowInstance) => void
@@ -23,20 +23,18 @@ const CAT_ICONS = {
   open: '/\\_/\\\n( ^.^ )\n> ^ <',
 } as const
 
-function isFolder(item: ToolbarItem): item is FolderDefinition {
-  return 'apps' in item
-}
-
 export default function ToolbarDesktop({
   openWindow,
   closeWindow,
-  windowsOptions = [],
+  windowsOptions: rawWindowsOptions = [],
   currentWindows,
   isOpen,
   toggleOpen,
   setIsOpen
 }: ToolbarDesktopProps) {
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
+
+  const { windowsOptions, isFolder } = useToolbarItems(rawWindowsOptions, currentWindows)
 
   const currentIcon = isOpen
     ? CAT_ICONS.open

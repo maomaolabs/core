@@ -1,9 +1,10 @@
-import { WindowInstance, ToolbarItem, FolderDefinition } from "../../../types";
+import { WindowInstance, ToolbarItem } from "../../../types";
 import commonStyles from '../../../styles/toolbar/Toolbar.module.css'
 import styles from '../../../styles/toolbar/ToolbarMobile.module.css'
 import SleepyMao from "../common/SleepyMao";
 import { MobileOptionItem } from "./MobileOptionItem";
 import { MobileFolderItem } from "./MobileFolderItem";
+import { useToolbarItems } from "../../../hooks/useToolbarItems";
 
 type ToolbarMobileProps = {
   openWindow: (window: WindowInstance) => void
@@ -19,12 +20,15 @@ const MOBILE_CAT_ICONS = {
   OPEN: '/\\_/\\\n( ^.^ )',
 };
 
-function isFolder(item: ToolbarItem): item is FolderDefinition {
-  return 'apps' in item;
-}
-
-export default function ToolbarMobile({ openWindow, windowsOptions: rawWindowsOptions = [], currentWindows, isOpen, toggleOpen, setIsOpen }: ToolbarMobileProps) {
-  const windowsOptions = Array.isArray(rawWindowsOptions) ? rawWindowsOptions : [];
+export default function ToolbarMobile({
+  openWindow,
+  windowsOptions: rawWindowsOptions = [],
+  currentWindows,
+  isOpen,
+  toggleOpen,
+  setIsOpen
+}: ToolbarMobileProps) {
+  const { windowsOptions, isFolder } = useToolbarItems(rawWindowsOptions, currentWindows);
   const mobileIcon = isOpen ? MOBILE_CAT_ICONS.OPEN : MOBILE_CAT_ICONS.IDLE;
 
   const handleCloseMenu = () => setIsOpen(false);

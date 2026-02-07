@@ -15,20 +15,20 @@
 .menuLeft {
   display: flex;
   justify-content: flex-end;
-  pointer-events: auto;
+  pointer-events: none;
   gap: 0.5rem;
 }
 
 .dockWrapper {
   display: flex;
   justify-content: center;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .menuRight {
   display: flex;
   justify-content: flex-start;
-  pointer-events: auto;
+  pointer-events: none;
   gap: 0.5rem;
 }
 
@@ -46,6 +46,7 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   backdrop-filter: blur(8px);
+  pointer-events: auto;
 }
 
 .catIcon {

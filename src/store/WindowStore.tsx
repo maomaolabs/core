@@ -28,11 +28,24 @@ export function WindowStoreProvider({ children }: { children: ReactNode }) {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT;
 
     setWindows((prev) => {
-      const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
+      // Bring to front if already exists
       if (prev.some(w => w.id === windowInstance.id)) {
-        return prev.map(w => w.id === windowInstance.id ? { ...w, zIndex: maxZ + 1, isMinimized: false } : w);
+        const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
+        return prev.map(w => w.id === windowInstance.id
+          ? { ...w, zIndex: maxZ + 1, isMinimized: false }
+          : w
+        );
       }
-      return [...prev, { ...windowInstance, zIndex: maxZ + 1, isMaximized: isMobile ? true : windowInstance.isMaximized }];
+
+      // Add new window
+      const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
+      const newWindow = {
+        ...windowInstance,
+        zIndex: maxZ + 1,
+        isMaximized: isMobile ? true : windowInstance.isMaximized
+      };
+
+      return [...prev, newWindow];
     });
   }, []);
 
@@ -43,7 +56,10 @@ export function WindowStoreProvider({ children }: { children: ReactNode }) {
   const focusWindow = useCallback((id: string) => {
     setWindows((prev) => {
       const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
-      return prev.map(w => w.id === id ? { ...w, zIndex: maxZ + 1, isMinimized: false } : w);
+      return prev.map(w => w.id === id
+        ? { ...w, zIndex: maxZ + 1, isMinimized: false }
+        : w
+      );
     });
   }, []);
 
