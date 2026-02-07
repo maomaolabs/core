@@ -41,11 +41,10 @@
 }
 
 .preview {
-  position: absolute;
-  bottom: -80%;
+  position: fixed;
+  bottom: auto;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 12px;
   width: 160px;
   background-color: rgba(229, 229, 229, 0.85);
   backdrop-filter: blur(12px);
@@ -110,7 +109,9 @@
   transition: opacity 0.2s;
 }
 
-.previewBody:hover { opacity: 0.9; }
+.previewBody:hover {
+  opacity: 0.9;
+}
 
 .previewContent {
   width: 400%;
@@ -122,6 +123,28 @@
   background-color: white;
   color: black;
   text-align: left;
+}
+
+.labelTooltip {
+  position: fixed;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  background-color: rgb(229, 229, 229);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  animation: fadeInLabel 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  z-index: 110000;
+  color: #1f2937;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 @keyframes fadeIn {
@@ -136,28 +159,71 @@
   }
 }
 
+@keyframes fadeInLabel {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(-100% - 5px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(calc(-100% - 10px));
+  }
+}
+
 @media (prefers-color-scheme: dark) {
-  .button { color: white; }
-  .button:hover { background-color: rgba(255, 255, 255, 0.1); }
-  .activeIndicator { background-color: white; }
+  .button {
+    color: white;
+  }
+
+  .button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .activeIndicator {
+    background-color: white;
+  }
+
   .preview {
     background-color: rgba(30, 30, 30, 0.85);
     border-color: rgba(255, 255, 255, 0.1);
   }
+
   .previewHeader {
     background-color: rgba(0, 0, 0, 0.2);
     border-bottom-color: rgba(255, 255, 255, 0.1);
   }
-  .previewTitle { color: #e5e5e5; }
-  .previewClose { color: #9ca3af; }
+
+  .previewTitle {
+    color: #e5e5e5;
+  }
+
+  .previewClose {
+    color: #9ca3af;
+  }
+
   .previewClose:hover {
     background-color: rgba(220, 38, 38, 0.2);
     color: #f87171;
   }
-  .previewBody { background-color: rgba(255, 255, 255, 0.05); }
-  .previewBody:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+  .previewBody {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .previewBody:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
   .previewContent {
     background-color: #1a1a1a;
     color: white;
+  }
+
+  .labelTooltip {
+    color: #e5e7eb;
+    background-color: rgb(31, 41, 55);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.4);
   }
 }

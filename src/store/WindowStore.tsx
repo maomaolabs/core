@@ -1,16 +1,17 @@
+'use client'
+
 import {
-  createContext,
-  useContext,
   useState,
   useCallback,
   useMemo,
   ReactNode,
 } from 'react';
-import { WindowInstance, WindowStore } from '../types';
-
-export const WindowStateContext = createContext<WindowInstance[] | null>(null);
-type WindowDispatch = Omit<WindowStore, 'windows'>;
-export const WindowDispatchContext = createContext<WindowDispatch | null>(null);
+import { WindowInstance } from '../types';
+import {
+  WindowStateContext,
+  WindowDispatchContext
+} from './window-context';
+import { MOBILE_BREAKPOINT } from './constants';
 
 /**
  * WindowStoreProvider component.
@@ -24,7 +25,7 @@ export function WindowStoreProvider({ children }: { children: ReactNode }) {
   const [snapPreview, setSnapPreview] = useState<{ side: 'left' | 'right' } | null>(null);
 
   const openWindow = useCallback((windowInstance: WindowInstance) => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT;
 
     setWindows((prev) => {
       const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
@@ -66,24 +67,4 @@ export function WindowStoreProvider({ children }: { children: ReactNode }) {
       </WindowStateContext.Provider>
     </WindowDispatchContext.Provider>
   );
-}
-
-/**
- * useWindowDispatcher hook.
- * Provides access to window actions WITHOUT triggering re-renders on state changes.
- */
-export function useWindowActions() {
-  const dispatch = useContext(WindowDispatchContext);
-  if (!dispatch) throw new Error('useWindowActions must be used within WindowStoreProvider');
-  return dispatch;
-}
-
-/**
- * useWindows hook.
- * Optimized hook for components that ONLY need the list of windows.
- */
-export function useWindows() {
-  const state = useContext(WindowStateContext);
-  if (state === null) throw new Error('useWindows must be used within WindowStoreProvider');
-  return state;
 }

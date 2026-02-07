@@ -5,6 +5,8 @@ import React from 'react';
  * WindowDefinition type.
  * Defines the properties of a window.
  */
+
+
 export type WindowDefinition = {
   id: string;
   title: string;
@@ -13,6 +15,15 @@ export type WindowDefinition = {
   initialSize?: { width: number; height: number };
   initialPosition?: { x: number; y: number };
 }
+
+export type FolderDefinition = {
+  id: string;
+  title: string;
+  icon?: React.ReactNode;
+  apps: WindowDefinition[];
+}
+
+export type ToolbarItem = WindowDefinition | FolderDefinition;
 
 /**
  * WindowInstance type.

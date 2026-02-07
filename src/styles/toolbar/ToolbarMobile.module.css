@@ -1,6 +1,6 @@
 .pawButton {
   pointer-events: auto;
-  background-color: rgba(212, 212, 212, 0.2);
+  background-color: rgba(212, 212, 212, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -14,12 +14,15 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  mix-blend-mode: difference;
 }
 
-.pawButton:hover { background-color: rgba(212, 212, 212, 0.3); }
+.pawButton:hover {
+  background-color: rgba(212, 212, 212, 0.5);
+}
 
 .pawButton:active {
-  background-color: rgba(212, 212, 212, 0.4);
+  background-color: rgba(212, 212, 212, 0.6);
   padding-bottom: 0.5rem;
   padding-right: 1.5rem;
 }
@@ -31,8 +34,9 @@
   top: auto;
   margin-bottom: 0.5rem;
   margin-right: 0;
-  background-color: rgba(212, 212, 212, 0.2);
+  background-color: rgba(212, 212, 212, 0.4);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
   padding: 0.5rem;
@@ -44,6 +48,7 @@
   pointer-events: none;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  mix-blend-mode: difference;
 }
 
 .mobileItemsVisible {
@@ -54,16 +59,60 @@
 
 @media (prefers-color-scheme: dark) {
   .pawButton {
-    background-color: rgba(163, 163, 163, 0.2);
+    background-color: rgba(163, 163, 163, 0.4);
     border-color: rgba(255, 255, 255, 0.2);
   }
 
-  .pawButton:hover { background-color: rgba(163, 163, 163, 0.3); }
+  .pawButton:hover {
+    background-color: rgba(163, 163, 163, 0.5);
+  }
 
-  .pawButton:active { background-color: rgba(163, 163, 163, 0.4); }
+  .pawButton:active {
+    background-color: rgba(163, 163, 163, 0.6);
+  }
 
   .mobileItems {
-    background-color: rgba(163, 163, 163, 0.2);
+    background-color: rgba(163, 163, 163, 0.4);
     border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.mobileIcon {
+  font-size: 0.9rem;
+  white-space: pre;
+  line-height: 1.2;
+  font-family: monospace;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Folder Mobile Styles */
+.folderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.folderHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.folderContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Slight separation */
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .folderContent {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.05);
   }
 }

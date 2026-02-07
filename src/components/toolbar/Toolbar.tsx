@@ -1,8 +1,8 @@
-import { useWindows, useWindowActions } from '../../store/WindowStore'
+import { useWindows, useWindowActions } from '../../store/window-context'
 import useToolbar from '../../hooks/useToolbar'
-import { ToolbarProps } from './toolbarTypes'
-import ToolbarDesktop from './ToolbarDesktop'
-import ToolbarMobile from './ToolbarMobile'
+import { ToolbarProps } from './common/toolbarTypes'
+import ToolbarDesktop from './desktop/ToolbarDesktop'
+import ToolbarMobile from './mobile/ToolbarMobile'
 import useIsMobile from '../../hooks/useIsMobile'
 
 /**

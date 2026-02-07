@@ -1,6 +1,6 @@
 'use client'
 
-import { useWindows, useWindowActions } from '../../store/WindowStore'
+import { useWindows, useWindowActions } from '../../store/window-context'
 import Window from './Window'
 import SnapOverlay from './SnapOverlay'
 import styles from '../../styles/WindowManager.module.css'

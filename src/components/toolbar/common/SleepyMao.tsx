@@ -1,4 +1,4 @@
-import styles from '../../styles/toolbar/SleepyMao.module.css'
+import styles from '../../../styles/toolbar/SleepyMao.module.css'
 
 export default function SleepyMao({ show }: { show: boolean }) {
   return (

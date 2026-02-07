@@ -3,8 +3,8 @@
   inset: 0 auto 0 0;
   width: 50vw;
   height: 100vh;
-  background-color: rgba(101, 253, 185, 0.1);
-  border: 2px solid #65fdb9;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 2px solid #10b981;
   border-radius: 12px;
   z-index: 40;
   pointer-events: none;
@@ -31,4 +31,11 @@
   right: 0;
   left: auto;
   border-radius: 12px 0 0 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .overlay {
+    background-color: rgba(101, 253, 185, 0.1);
+    border-color: #65fdb9;
+  }
 }

@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { WindowContext } from './WindowContext'
-import { useWindowActions } from '../../store/WindowStore'
+import { useWindowActions } from '../../store/window-context'
 import { useWindowStatus } from '../../hooks/useWindow/useWindowStatus'
 import WindowHeader from './WindowHeader'
 
@@ -27,14 +27,22 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
     requestAnimationFrame(() => setIsOpen(true));
   }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsClosing(true);
     setTimeout(() => { closeWindow(windowInstance.id); }, 200);
-  };
+  }, [closeWindow, windowInstance.id]);
 
-  const handleMinimize = () => updateWindow(windowInstance.id, { isMinimized: true });
-  const handleMaximize = () => updateWindow(windowInstance.id, { isMaximized: true, isMinimized: false, isSnapped: false });
-  const handleRestore = () => updateWindow(windowInstance.id, { isMinimized: false, isMaximized: false, isSnapped: false });
+  const handleMinimize = useCallback(() => {
+    updateWindow(windowInstance.id, { isMinimized: true });
+  }, [updateWindow, windowInstance.id]);
+
+  const handleMaximize = useCallback(() => {
+    updateWindow(windowInstance.id, { isMaximized: true, isMinimized: false, isSnapped: false });
+  }, [updateWindow, windowInstance.id]);
+
+  const handleRestore = useCallback(() => {
+    updateWindow(windowInstance.id, { isMinimized: false, isMaximized: false, isSnapped: false });
+  }, [updateWindow, windowInstance.id]);
 
   const handleSnap = React.useCallback((side: 'left' | 'right') => {
     const width = window.innerWidth / 2;
@@ -73,7 +81,7 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
     setSnapPreview
   })
 
-  const uiValue: WindowContextState = {
+  const uiValue: WindowContextState = useMemo(() => ({
     size,
     position,
     isDragging,
@@ -87,7 +95,7 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
     minimize: handleMinimize,
     maximize: handleMaximize,
     restore: handleRestore
-  }
+  }), [size, position, isDragging, isResizing, drag, resize, windowRef, windowInstance.isMinimized, windowInstance.isMaximized, windowInstance.isSnapped, handleMinimize, handleMaximize, handleRestore])
 
   const isVisible = isOpen && !isClosing && !windowInstance.isMinimized;
   const isMaximized = windowInstance.isMaximized;
@@ -135,7 +143,7 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
             onMouseDown={resize}
           />
         )}
-        
+
       </div>
     </WindowContext.Provider>
   )

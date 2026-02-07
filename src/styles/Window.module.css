@@ -50,20 +50,18 @@
   overflow-x: hidden;
 }
 
-/* Theme & Visuals */
 .container {
-  background: rgba(20, 20, 20, 0.6);
-  color: #e4e4e7;
+  background: rgba(255, 255, 255, 0.85);
+  color: #18181b;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .header {
-  background: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .body {
@@ -77,32 +75,36 @@
   right: 4px;
   width: 8px;
   height: 8px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  border-right: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 0 0 2px 0;
   transition: border-color 0.2s;
 }
 
 .resizeHandle:hover::after {
-  border-color: #ffffff;
+  border-color: #4b5563;
 }
 
-/* Scrollbar */
-.scrollbar::-webkit-scrollbar {
-  width: 2px;
+.scrollbar::-webkit-scrollbar,
+.content *::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
 
-.scrollbar::-webkit-scrollbar-track {
+.scrollbar::-webkit-scrollbar-track,
+.content *::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.scrollbar::-webkit-scrollbar-thumb {
-  background-color: #65fdb9;
+.scrollbar::-webkit-scrollbar-thumb,
+.content *::-webkit-scrollbar-thumb {
+  background-color: #10b981;
   border-radius: 6px;
 }
 
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #52525b;
+.scrollbar::-webkit-scrollbar-thumb:hover,
+.content *::-webkit-scrollbar-thumb:hover {
+  background-color: #059669;
 }
 
 .transition {
@@ -118,8 +120,9 @@
 
 .focused {
   box-shadow:
-    0 15px 50px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+  /* Focused ring */
 }
 
 .maximized {
@@ -143,4 +146,49 @@
 .hidden {
   opacity: 0;
   transform: scale(0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: rgba(20, 20, 20, 0.6);
+    color: #e4e4e7;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .header {
+    background-color: rgb(19, 19, 19);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .resizeHandle::after {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .resizeHandle:hover::after {
+    border-color: #ffffff;
+  }
+
+  /* Scrollbar - Reverting to neon/bright for dark mode contrast */
+  .scrollbar::-webkit-scrollbar-thumb,
+  .scrollbarX::-webkit-scrollbar-thumb,
+  .content *::-webkit-scrollbar-thumb {
+    background-color: #65fdb9;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover,
+  .scrollbarX::-webkit-scrollbar-thumb:hover,
+  .content *::-webkit-scrollbar-thumb:hover {
+    background-color: #52525b;
+    /* Zinc 600 */
+  }
+
+  .scrollbarX {
+    scrollbar-color: #65fdb9 transparent;
+  }
+
+  .focused {
+    box-shadow:
+      0 15px 50px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
 }
