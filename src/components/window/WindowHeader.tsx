@@ -25,7 +25,7 @@ export default function WindowHeader({ onClose, title, icon }: WindowHeaderProps
       onMouseDown={drag}
     >
       <span className={`window-title ${brandStyles.title}`}>
-        {icon && <span className={`cat-icon ${brandStyles.catIcon} ${brandStyles.brandText}`}>{icon}</span>}
+        {icon && <span className={`window-icon ${brandStyles.windowIcon} ${brandStyles.brandText}`}>{icon}</span>}
         <span className={`brand-text ${brandStyles.brandText}`}>
           {title}
         </span>

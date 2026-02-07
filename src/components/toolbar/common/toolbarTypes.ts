@@ -1,4 +1,4 @@
-import { WindowDefinition } from "../../types";
+import { WindowDefinition } from "../../../types";
 
 export type ToolbarAction = {
   id: string;

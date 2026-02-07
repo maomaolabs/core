@@ -4,8 +4,6 @@ import dts from 'vite-plugin-dts';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -13,20 +11,28 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
+      include: ['src'],
       insertTypesEntry: true,
+      rollupTypes: true,
     }),
-    cssInjectedByJsPlugin(),
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.tsx'),
       name: 'Core',
-      formats: ['es', 'umd'],
-      fileName: (format) => `core.${format}.js`,
+      formats: ['es'],
+      fileName: (format) => `index.${format}.js`,
     },
+    cssCodeSplit: false,
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
+        banner: "'use client';",
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',

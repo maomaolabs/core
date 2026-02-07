@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { DEFAULT_POSITION, DEFAULT_SIZE } from './constants';
 import { useDrag } from './useDrag';
 import { useResize } from './useResize';
@@ -35,9 +35,17 @@ export function useWindowStatus({
 
   const windowRef = useRef<HTMLDivElement>(null);
 
+  const updateLastPosition = useCallback((pos: Position) => {
+    lastPosition.current = pos;
+  }, []);
+
+  const updateLastSize = useCallback((s: Size) => {
+    lastSize.current = s;
+  }, []);
+
   const snap = useSnap(setSnapPreview);
-  const drag = useDrag(size, position, windowRef, pos => (lastPosition.current = pos), snap.detectSnap);
-  const resize = useResize(size, windowRef, s => (lastSize.current = s));
+  const drag = useDrag(size, position, windowRef, updateLastPosition, snap.detectSnap);
+  const resize = useResize(size, windowRef, updateLastSize);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -69,6 +77,17 @@ export function useWindowStatus({
     };
   }, [drag, resize, onSnap, onUnsnap, isSnapped, snap]);
 
+  /**
+   * Returns window state and interaction handlers
+   * @returns {Object} Window status object
+   * @property {Size} size - Current window size
+   * @property {Position} position - Current window position
+   * @property {React.RefObject<HTMLDivElement>} windowRef - Reference to window DOM element
+   * @property {Function} drag - Function to initiate drag operation
+   * @property {Function} resize - Function to initiate resize operation
+   * @property {boolean} isDragging - Whether window is currently being dragged
+   * @property {boolean} isResizing - Whether window is currently being resized
+   */
   return {
     size,
     position,

@@ -7,7 +7,7 @@
 .button {
   background: transparent;
   border: none;
-  color: #71717a;
+  color: #52525b;
   cursor: pointer;
   padding: 6px;
   display: flex;
@@ -18,11 +18,22 @@
 }
 
 .button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #e4e4e7;
+  background: rgba(0, 0, 0, 0.05);
+  color: #18181b;
 }
 
 .close:hover {
   background: #ef4444;
   color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    color: #a1a1aa;
+  }
+
+  .button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e4e4e7;
+  }
 }

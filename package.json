@@ -1,5 +1,6 @@
 {
   "name": "@maomaolabs/core",
+  "version": "0.0.0",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -8,24 +9,23 @@
     "type": "git",
     "url": "git+https://github.com/maomaolabs/core.git"
   },
-  "version": "0.0.0",
   "type": "module",
-  "main": "dist/core.umd.js",
-  "module": "dist/core.es.js",
+  "main": "dist/index.es.js",
+  "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/core.es.js",
-      "require": "./dist/core.umd.js"
+      "import": "./dist/index.es.js",
+      "types": "./dist/index.d.ts"
     },
-    "./dist/style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "watch": "vite build --watch",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
