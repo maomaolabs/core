@@ -1,0 +1,26 @@
+# Source and Tests
+src/
+__tests__/
+*.test.ts
+*.test.tsx
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+vitest.config.ts
+.eslintrc*
+.prettierrc*
+
+# Git and Config
+.git/
+.github/
+.husky/
+.vscode/
+.gitignore
+.npmignore
+
+# Node
+node_modules/
+
+# Logs and cache
+*.log
+coverage/

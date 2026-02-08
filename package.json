@@ -1,6 +1,6 @@
 {
   "name": "@maomaolabs/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -9,6 +9,19 @@
     "type": "git",
     "url": "git+https://github.com/maomaolabs/core.git"
   },
+  "author": "MaoMao Labs",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "window-manager",
+    "desktop",
+    "ui",
+    "os",
+    "window"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "type": "module",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
@@ -31,6 +44,10 @@
     "preview": "vite preview",
     "test": "vitest"
   },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^16.3.2",
@@ -42,14 +59,12 @@
     "jsdom": "^28.0.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vite-plugin-css-injected-by-js": "^3.5.2",
     "vite-plugin-dts": "^2.3.0",
     "vitest": "^4.0.18"
-  },
-  "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
   }
 }
