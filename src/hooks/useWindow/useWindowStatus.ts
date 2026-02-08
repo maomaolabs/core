@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { DEFAULT_POSITION, DEFAULT_SIZE } from './constants';
 import { useDrag } from './useDrag';
 import { useResize } from './useResize';
@@ -92,7 +92,7 @@ export function useWindowStatus({
     };
   }, [drag, resize, onSnap, onUnsnap, isSnapped, snap]);
 
-  return {
+  return useMemo(() => ({
     size,
     position,
     windowRef,
@@ -100,5 +100,5 @@ export function useWindowStatus({
     resize: startResize,
     isDragging,
     isResizing
-  };
+  }), [size, position, isDragging, isResizing, startDrag, startResize]);
 }

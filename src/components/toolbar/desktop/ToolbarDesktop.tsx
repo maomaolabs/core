@@ -73,7 +73,11 @@ export default function ToolbarDesktop({
   }, [])
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      role="toolbar"
+      aria-label="Desktop Toolbar"
+    >
       {/* 1. Left Menu */}
       <div className={`${styles.menuLeft} ${currentWindows.length > 0 ? styles.menuOpen : styles.menuClosed}`}>
         <div className={styles.menuContentLeft}>
@@ -99,6 +103,8 @@ export default function ToolbarDesktop({
           <button
             className={styles.launcher}
             onClick={toggleOpen}
+            aria-label={isOpen ? "Close Menu" : "Open Menu"}
+            aria-expanded={isOpen}
           >
             <SleepyMao show={!isOpen && currentWindows.length === 0} />
             <span className={`${styles.catIcon}`}>

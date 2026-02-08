@@ -2,7 +2,7 @@
 
 import React, { useMemo, useCallback } from 'react'
 import { WindowContext } from './WindowContext'
-import { useWindowActions } from '../../store/window-context'
+import { useWindowActions, useWindowSnap } from '../../store/window-context'
 import { useWindowStatus } from '../../hooks/useWindow/useWindowStatus'
 import WindowHeader from './WindowHeader'
 
@@ -18,7 +18,8 @@ import { WindowProps, WindowContextState } from '../../types'
  * @returns {JSX.Element} The window component.
  */
 const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
-  const { closeWindow, focusWindow, updateWindow, setSnapPreview } = useWindowActions()
+  const { closeWindow, focusWindow, updateWindow } = useWindowActions()
+  const { setSnapPreview } = useWindowSnap()
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);

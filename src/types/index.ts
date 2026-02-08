@@ -14,6 +14,7 @@ export type WindowDefinition = {
   component: React.ReactNode;
   initialSize?: { width: number; height: number };
   initialPosition?: { x: number; y: number };
+  layer?: 'base' | 'normal' | 'alwaysOnTop' | 'modal';
 }
 
 export type FolderDefinition = {
@@ -39,6 +40,7 @@ export type WindowInstance = {
   isMaximized?: boolean;
   isSnapped?: boolean;
   zIndex: number;
+  layer: 'base' | 'normal' | 'alwaysOnTop' | 'modal';
   component: React.ReactNode;
 }
 

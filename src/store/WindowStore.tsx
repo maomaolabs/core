@@ -2,16 +2,15 @@
 
 import {
   useState,
-  useCallback,
   useMemo,
   ReactNode,
 } from 'react';
-import { WindowInstance } from '../types';
 import {
   WindowStateContext,
-  WindowDispatchContext
+  WindowDispatchContext,
+  WindowSnapContext
 } from './window-context';
-import { MOBILE_BREAKPOINT } from './constants';
+import { useWindowManager } from '../hooks/useWindowManager';
 
 /**
  * WindowStoreProvider component.
@@ -21,66 +20,36 @@ import { MOBILE_BREAKPOINT } from './constants';
  * @returns {JSX.Element} The WindowStoreProvider component.
  */
 export function WindowStoreProvider({ children }: { children: ReactNode }) {
-  const [windows, setWindows] = useState<WindowInstance[]>([]);
+  const { windows, openWindow, closeWindow, focusWindow, updateWindow } = useWindowManager();
   const [snapPreview, setSnapPreview] = useState<{ side: 'left' | 'right' } | null>(null);
 
-  const openWindow = useCallback((windowInstance: WindowInstance) => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT;
-
-    setWindows((prev) => {
-      // Bring to front if already exists
-      if (prev.some(w => w.id === windowInstance.id)) {
-        const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
-        return prev.map(w => w.id === windowInstance.id
-          ? { ...w, zIndex: maxZ + 1, isMinimized: false }
-          : w
-        );
-      }
-
-      // Add new window
-      const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
-      const newWindow = {
-        ...windowInstance,
-        zIndex: maxZ + 1,
-        isMaximized: isMobile ? true : windowInstance.isMaximized
-      };
-
-      return [...prev, newWindow];
-    });
-  }, []);
-
-  const closeWindow = useCallback((id: string) => {
-    setWindows((prev) => prev.filter(w => w.id !== id));
-  }, []);
-
-  const focusWindow = useCallback((id: string) => {
-    setWindows((prev) => {
-      const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
-      return prev.map(w => w.id === id
-        ? { ...w, zIndex: maxZ + 1, isMinimized: false }
-        : w
-      );
-    });
-  }, []);
-
-  const updateWindow = useCallback((id: string, data: Partial<WindowInstance>) => {
-    setWindows((prev) => prev.map(w => (w.id === id ? { ...w, ...data } : w)));
-  }, []);
-
+  /* 
+   * Dispatch actions are stable and do not change over time.
+   * This prevents re-renders in components that only consume actions (like Toolbar).
+   */
   const dispatchValue = useMemo(() => ({
-    snapPreview,
-    setSnapPreview,
     openWindow,
     closeWindow,
     focusWindow,
     updateWindow,
-  }), [snapPreview, openWindow, closeWindow, focusWindow, updateWindow]);
+  }), [openWindow, closeWindow, focusWindow, updateWindow]);
+
+  /*
+   * Snap state changes frequently during drag operations.
+   * Isolated in its own context to strictly limit re-renders to the SnapOverlay.
+   */
+  const snapValue = useMemo(() => ({
+    snapPreview,
+    setSnapPreview
+  }), [snapPreview]);
 
   return (
     <WindowDispatchContext.Provider value={dispatchValue}>
-      <WindowStateContext.Provider value={windows}>
-        {children}
-      </WindowStateContext.Provider>
+      <WindowSnapContext.Provider value={snapValue}>
+        <WindowStateContext.Provider value={windows}>
+          {children}
+        </WindowStateContext.Provider>
+      </WindowSnapContext.Provider>
     </WindowDispatchContext.Provider>
   );
 }

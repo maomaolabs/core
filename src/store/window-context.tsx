@@ -1,10 +1,14 @@
 import { createContext, useContext } from 'react';
 import { WindowInstance, WindowStore } from '../types';
 
-export type WindowDispatch = Omit<WindowStore, 'windows'>;
+export type WindowDispatch = Omit<WindowStore, 'windows' | 'snapPreview' | 'setSnapPreview'>;
 
 export const WindowStateContext = createContext<WindowInstance[] | null>(null);
 export const WindowDispatchContext = createContext<WindowDispatch | null>(null);
+export const WindowSnapContext = createContext<{
+  snapPreview: { side: 'left' | 'right' } | null;
+  setSnapPreview: (preview: { side: 'left' | 'right' } | null) => void;
+} | null>(null);
 
 /**
  * useWindowActions hook.
@@ -14,6 +18,16 @@ export function useWindowActions() {
   const dispatch = useContext(WindowDispatchContext);
   if (!dispatch) throw new Error('useWindowActions must be used within WindowStoreProvider');
   return dispatch;
+}
+
+/**
+ * useWindowSnap hook.
+ * Provides access to snap preview state.
+ */
+export function useWindowSnap() {
+  const context = useContext(WindowSnapContext);
+  if (!context) throw new Error('useWindowSnap must be used within WindowStoreProvider');
+  return context;
 }
 
 /**

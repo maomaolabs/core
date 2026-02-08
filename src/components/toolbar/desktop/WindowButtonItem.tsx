@@ -10,7 +10,7 @@ export const WindowButtonItem = memo(({ window, currentWindows, openWindow, clos
   closeWindow: (id: string) => void
 }) => {
   const isActive = currentWindows.some((ow) => ow.id === window.id);
-  const handleOpen = useCallback(() => openWindow({ ...window, zIndex: 0 }), [openWindow, window]);
+  const handleOpen = useCallback(() => openWindow({ ...window, zIndex: 0, layer: window.layer || 'normal' }), [openWindow, window]);
   const handleClose = useCallback(() => closeWindow(window.id), [closeWindow, window.id]);
 
   return (
