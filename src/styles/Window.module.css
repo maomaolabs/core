@@ -6,6 +6,9 @@
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   pointer-events: auto;
+  contain: content;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
 .header {

@@ -13,7 +13,6 @@ export function useWindowManager() {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT;
 
     setWindows((prev) => {
-      // Bring to front if already exists
       if (prev.some(w => w.id === windowInstance.id)) {
         const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
         return prev.map(w => w.id === windowInstance.id
@@ -22,7 +21,6 @@ export function useWindowManager() {
         );
       }
 
-      // Add new window
       const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
       const newWindow = {
         ...windowInstance,
@@ -40,7 +38,13 @@ export function useWindowManager() {
 
   const focusWindow = useCallback((id: string) => {
     setWindows((prev) => {
+      const windowToFocus = prev.find(w => w.id === id);
+      if (!windowToFocus) return prev;
+
       const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
+
+      if (windowToFocus.zIndex === maxZ && !windowToFocus.isMinimized) return prev;
+
       return prev.map(w => w.id === id
         ? { ...w, zIndex: maxZ + 1, isMinimized: false }
         : w

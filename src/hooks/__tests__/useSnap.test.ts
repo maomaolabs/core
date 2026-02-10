@@ -15,7 +15,7 @@ describe('useSnap', () => {
     const { result } = renderHook(() => useSnap(setSnapPreview));
 
     act(() => {
-      result.current.detectSnap(500); // Middle of screen
+      result.current.detectSnap(500); 
     });
 
     expect(result.current.currentSide.current).toBeNull();

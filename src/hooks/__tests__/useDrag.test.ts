@@ -16,7 +16,6 @@ describe('useDrag', () => {
       }
     };
     vi.clearAllMocks();
-    // Mock window dimensions
     global.innerWidth = 1000;
     global.innerHeight = 800;
   });
@@ -62,7 +61,6 @@ describe('useDrag', () => {
       result.current.startDrag({ clientX: 0, clientY: 0 } as React.MouseEvent);
     });
 
-    // Try to drag beyond window width (1000 - 100 = 900 max x)
     const farEvent = { clientX: 2000, clientY: 0 } as MouseEvent;
     act(() => {
       result.current.dragTo(farEvent);

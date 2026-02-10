@@ -4,7 +4,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Window from '../Window';
 import { WindowInstance } from '../../../types';
 
-// Use vi.hoisted for variables accessed in vi.mock
 const { mockUseWindowActions, mockUseWindowSnap, mockUseWindowStatus, MockWindowHeader } = vi.hoisted(() => {
   return {
     mockUseWindowActions: {
@@ -55,7 +54,6 @@ describe('Window', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // Setup Component Mock Implementation
     MockWindowHeader.mockImplementation(({ title, onClose }: any) => (
       <div data-testid="window-header">
         <span>{title}</span>
@@ -63,7 +61,6 @@ describe('Window', () => {
       </div>
     ));
 
-    // Sync mock for rendering test
     global.requestAnimationFrame = (cb) => {
       cb(0);
       return 0;

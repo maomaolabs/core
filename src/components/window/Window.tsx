@@ -135,7 +135,7 @@ const Window: React.FC<WindowProps> = ({ window: windowInstance }) => {
           className={`window-scrollbar ${styles.scrollbar} ${styles.content}`}
           style={{ display: isMinimized ? 'none' : 'flex' }}
         >
-          {windowInstance.component}
+          {!isMinimized && windowInstance.component}
         </div>
 
         {!isMaximized && (

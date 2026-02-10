@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useMemo } from 'react';
 import { MIN_HEIGHT, MIN_WIDTH } from './constants';
 import { Size } from './types';
 
@@ -13,8 +13,8 @@ export function useResize(
   const resizeTo = useCallback((e: MouseEvent) => {
     if (!isResizing.current) return;
 
-    const w = Math.max(MIN_WIDTH, start.current.w + e.clientX - start.current.x);
-    const h = Math.max(MIN_HEIGHT, start.current.h + e.clientY - start.current.y);
+    const w = Math.min(window.innerWidth, Math.max(MIN_WIDTH, start.current.w + e.clientX - start.current.x));
+    const h = Math.min(window.innerHeight, Math.max(MIN_HEIGHT, start.current.h + e.clientY - start.current.y));
 
     if (windowRef.current) {
       windowRef.current.style.width = `${w}px`;
@@ -24,12 +24,19 @@ export function useResize(
     onResizeEnd({ width: w, height: h });
   }, [onResizeEnd]);
 
-  const startResize = (e: React.MouseEvent) => {
+  const startResize = useCallback((e: React.MouseEvent) => {
     start.current = { x: e.clientX, y: e.clientY, w: size.width, h: size.height };
     isResizing.current = true;
-  };
+  }, [size.width, size.height]);
 
-  const stopResize = () => isResizing.current = false;
+  const stopResize = useCallback(() => {
+    isResizing.current = false;
+  }, []);
 
-  return { resizeTo, startResize, stopResize, isResizing };
+  return useMemo(() => ({
+    resizeTo,
+    startResize,
+    stopResize,
+    isResizing
+  }), [resizeTo, startResize, stopResize]);
 }

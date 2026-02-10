@@ -5,7 +5,7 @@ import { MIN_WIDTH, MIN_HEIGHT } from '../useWindow/constants';
 
 describe('useResize', () => {
   let windowRef: any;
-  const onResizeEnd = vi.fn(); // Logic suggests this is onUpdate
+  const onResizeEnd = vi.fn(); 
   const size = { width: 500, height: 500 };
 
   beforeEach(() => {
@@ -41,13 +41,11 @@ describe('useResize', () => {
       result.current.startResize(startEvent);
     });
 
-    // Move +50px
     const moveEvent = { clientX: 150, clientY: 150 } as MouseEvent;
     act(() => {
       result.current.resizeTo(moveEvent);
     });
 
-    // Initial 500 + 50 = 550
     expect(windowRef.current.style.width).toBe('550px');
     expect(windowRef.current.style.height).toBe('550px');
     expect(onResizeEnd).toHaveBeenCalledWith({ width: 550, height: 550 });
@@ -61,13 +59,11 @@ describe('useResize', () => {
       result.current.startResize(startEvent);
     });
 
-    // Move to shrink way below minimum
     const moveEvent = { clientX: -500, clientY: -500 } as MouseEvent;
     act(() => {
       result.current.resizeTo(moveEvent);
     });
 
-    // Should clamp to MIN_WIDTH/HEIGHT
     expect(windowRef.current.style.width).toBe(`${MIN_WIDTH}px`);
     expect(windowRef.current.style.height).toBe(`${MIN_HEIGHT}px`);
   });

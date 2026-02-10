@@ -23,7 +23,6 @@ describe('useWindowStatus', () => {
     expect(result.current.isResizing).toBe(false);
   });
 
-  // Validating that startDrag sets state. proper drag logic is tested in useDrag
   it('should handle drag start', () => {
     const { result } = renderHook(() => useWindowStatus(props));
     const event = { clientX: 150, clientY: 150 } as React.MouseEvent;

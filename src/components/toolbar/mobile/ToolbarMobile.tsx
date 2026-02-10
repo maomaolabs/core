@@ -53,7 +53,6 @@ export default function ToolbarMobile({
                 );
               }
 
-              // Standard app item
               return (
                 <MobileOptionItem
                   key={item.id}

@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useMemo } from 'react';
 import { Position, Size } from './types';
 
 export function useDrag(
@@ -33,17 +33,22 @@ export function useDrag(
     onMove({ x, y });
   }, [size, onMove, onSnapCheck]);
 
-  const startDrag = (e: React.MouseEvent) => {
+  const startDrag = useCallback((e: React.MouseEvent) => {
     start.current = {
       x: e.clientX - position.x,
       y: e.clientY - position.y
     };
     isDragging.current = true;
-  };
+  }, [position.x, position.y]);
 
-  const stopDrag = () => {
+  const stopDrag = useCallback(() => {
     isDragging.current = false;
-  };
+  }, []);
 
-  return { dragTo, startDrag, stopDrag, isDragging };
+  return useMemo(() => ({
+    dragTo,
+    startDrag,
+    stopDrag,
+    isDragging
+  }), [dragTo, startDrag, stopDrag]);
 }

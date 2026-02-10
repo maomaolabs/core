@@ -11,7 +11,12 @@ export const MobileOptionItem = memo(({ window, currentWindows, openWindow, clos
 }) => {
   const isActive = currentWindows.some((ow) => ow.id === window.id);
   const handleOpen = useCallback(() => {
-    openWindow({ ...window, zIndex: 0 } as WindowInstance);
+    openWindow({
+      ...window,
+      zIndex: 0,
+      size: window.initialSize,
+      position: window.initialPosition
+    } as WindowInstance);
     closeMenu();
   }, [openWindow, window, closeMenu]);
 
